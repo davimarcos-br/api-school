@@ -14,6 +14,6 @@ require('./controllers/authController')(app)
 }) */
 
 app.listen(3000,()=>{
-    //console.log('rodando');
+    console.log('rodando');
     console.log('http://localhost:3000/');
 })
