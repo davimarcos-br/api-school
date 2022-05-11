@@ -2,9 +2,14 @@ const express = require('express')
 const User = require('../models/users')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const authConfig = require('../config/auth.json')
+
 
 const router = express.Router()
 
+const tokenGenerator = (param = {}) =>{
+    return jwt.sign(param, authConfig.secret, { expiresIn: 86400 } )
+}
 
 router.post('/register', async ( req, res)=>{
     const  { email } = req.body
@@ -15,7 +20,12 @@ router.post('/register', async ( req, res)=>{
         
         console.log({user})
         user.password = undefined
-        return res.send({user})
+
+        return res.send({ 
+            user, 
+            token: tokenGenerator({ id: user.id } ) 
+        })
+
     } catch (err) {
         return res.status(400).send(err)
     }
@@ -33,8 +43,10 @@ router.post('/autheticate', async (req, res)=>{
         return res.status(400).send({ error: 'Senha inválida' })
     user.password = undefined
 
-    const token = jwt.sign({ id: user._id })
-    res.send({ user })
+    res.send({ 
+        user, 
+        token: tokenGenerator({ id: user.id } ) 
+    })
 
 })
 
