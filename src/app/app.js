@@ -7,6 +7,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false}))
 
 require('./controllers/authController')(app)
+require('./controllers/projectsControllers')(app)
 
 /* app.use('/', (req,res) =>{
     res.send({nome: "davi"})
