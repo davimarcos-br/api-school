@@ -1,10 +1,15 @@
 const mongoose = require('../../database')
 const bcrypt = require('bcryptjs')
 
-const UserSchema = new mongoose.Schema({
+const ManagerSchema = new mongoose.Schema({
     name: {
         type: String,
         require: true
+    },
+    cpf: {
+        type: String,
+        require: true,
+        unique: true,
     },
     email: {
         type: String,
@@ -12,28 +17,25 @@ const UserSchema = new mongoose.Schema({
         unique: true,
         lowercase: true
     },
-    password: {
-        type: String,
-        require: true,
-        select: false
+
+    alunos: {
+        type: [String]
     },
+
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+
 })
 
-
-
-UserSchema.pre('save', async  function(next){
+/* ManagerSchema.pre('save', async  function(next){
 const hash = await bcrypt.hash(this.password, 10)
 this.password = hash
-
 next()
-})
+}) */
 
- const User = mongoose.model('User', UserSchema) 
- const Manager = mongoose.model('Manager', ManagerSchema,'users') 
+const Manager = mongoose.model('Manager', ManagerSchema,'users') 
 
-module.exports = User
+module.exports = Manager
 
