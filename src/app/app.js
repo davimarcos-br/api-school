@@ -8,6 +8,7 @@ app.use(express.urlencoded({ extended: false}))
 
 require('./controllers/authController')(app)
 require('./controllers/projectsControllers')(app)
+require('./controllers/managerController')(app)
 
 /* app.use('/', (req,res) =>{
     res.send({nome: "davi"})

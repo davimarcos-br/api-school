@@ -33,7 +33,7 @@ next()
 })
 
  const User = mongoose.model('User', UserSchema) 
- const Manager = mongoose.model('Manager', ManagerSchema,'users') 
+ 
 
 module.exports = User
 
